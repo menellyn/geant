@@ -1,13 +1,13 @@
 #ifndef DetectorConstruction_h
 #define DetectorConstruction_h 1
 
+
 #include "G4VUserDetectorConstruction.hh"
-#include "globals.hh"
+#include "G4ThreeVector.hh"
 
 class G4VPhysicalVolume;
 class G4LogicalVolume;
 
-/// Detector construction class to define materials and geometry.
 
 class DetectorConstruction : public G4VUserDetectorConstruction
 {
@@ -16,11 +16,13 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     ~DetectorConstruction() override = default;
 
     G4VPhysicalVolume* Construct() override;
+    void ConstructSDandField() override;
 
-    G4LogicalVolume* GetScoringVolume() const { return fScoringVolume; }
+    std::vector<G4ThreeVector> CalculateDodecahedronVertices(G4double radius);
+    std::vector<G4ThreeVector> CalculateIcosahedronVertices(G4double radius);
 
-  protected:
-    G4LogicalVolume* fScoringVolume = nullptr;
+  private:
+    G4LogicalVolume* logicPhotocatod;
 };
 
 
